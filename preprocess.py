@@ -53,7 +53,7 @@ def load_audios_from_folder(directory):
 
         yield np.array(audio_array)
 
-    except NotADirectoryError:
+    except FileNotFoundError:
         print(f"{directory} does not exist")
 
 

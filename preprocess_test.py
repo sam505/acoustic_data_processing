@@ -14,10 +14,9 @@ def test_load_audio():
 def test_missing_file():
     file_path = "data/nyeri-highway/33-27.wav"
 
-    try:
-        signal = load_audio(file_path)
-    except FileNotFoundError:
-        assert FileNotFoundError
+    signal = load_audio(file_path)
+
+    assert not signal
 
 
 def test_directory():
@@ -30,7 +29,7 @@ def test_directory():
 
 def test_not_a_directory():
     path = "audio_data"
-    try:
-        audio_arr = load_audios_from_folder(path)
-    except NotADirectoryError:
-        assert NotADirectoryError
+
+    audio_arr = load_audios_from_folder(path)
+    for arr in audio_arr:
+        assert type(arr) != np.ndarray
