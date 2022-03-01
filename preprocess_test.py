@@ -1,4 +1,5 @@
 import numpy as np
+
 from preprocess import *
 
 
@@ -18,3 +19,18 @@ def test_missing_file():
     except FileNotFoundError:
         assert FileNotFoundError
 
+
+def test_directory():
+    path = "data/nyeri-highway"
+
+    audio_arr = load_audios_from_folder(path)
+    for arr in audio_arr:
+        assert type(arr) == np.ndarray
+
+
+def test_not_a_directory():
+    path = "audio_data"
+    try:
+        audio_arr = load_audios_from_folder(path)
+    except NotADirectoryError:
+        assert NotADirectoryError

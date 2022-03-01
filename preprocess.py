@@ -29,8 +29,8 @@ num_frame = int((0.5 * duration * sampling_rate) / hop_len)
 def load_audio(audio_path):
     """
 
-    :param audio_path:
-    :return: s
+    :param audio_path: Path to a single audio file
+    :return: s: an array representation of the audio
     """
     try:
         s, _ = librosa.load(audio_path, sr=sampling_rate)
@@ -39,6 +39,21 @@ def load_audio(audio_path):
         print(f"{audio_path} does not exist")
 
 
-audio_path = "data/nyeri-highway/2021-09-24-16-33-27.wav"
-load_audio(audio_path)
+def load_audios_from_folder(directory):
+    """
+
+    :param directory:
+    :return: audio_array
+    """
+    try:
+        audio_array = []
+        files = os.listdir(directory)
+        for file in files:
+            audio_array.append(load_audio(os.path.join(directory, file)))
+
+        yield np.array(audio_array)
+
+    except NotADirectoryError:
+        print(f"{directory} does not exist")
+
 
